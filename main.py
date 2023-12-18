@@ -1,16 +1,37 @@
-# This is a sample Python script.
+import random as random_mod
+from turtle import Turtle, Screen
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+is_race_on = False
+colors = ["red","orange","yellow","green","blue","purple"]
+screen = Screen()
+screen.setup(width=500,height=400)
+y_pos = [-100, -60, -20, 20, 60, 100]
+
+user_bet = screen.textinput(title="Make your bet", prompt="Which turtle will win the race? Enter a color: ")
+all_turtles = []
+
+for turtle_index in range(0,6):
+    tim = Turtle(shape="turtle")
+    tim.color(colors[turtle_index])
+    tim.penup()
+    tim.goto(x=-230, y=y_pos[turtle_index])
+    all_turtles.append(tim)
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+if user_bet:
+    is_race_on = True
+
+while is_race_on:
+    for turtle in all_turtles:
+        if turtle.xcor() > 230:
+            is_race_on = False
+            winning_color = turtle.pencolor()
+            if winning_color == user_bet:
+                print(f"You've won! The {winning_color} turtle is the winner!")
+            else:
+                print(f"You lose. The {winning_color} turtle is the winner.")
+        random_int = random_mod.randint(0,10)
+        turtle.forward(random_int)
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+screen.exitonclick()
